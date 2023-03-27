@@ -1,11 +1,11 @@
-import DeleteButton from './DeleteButton';
 import { Link } from 'react-router-dom';
 import React from 'react';
+import DeleteButton from './DeleteButton';
 
-const Comment = props => {
+function Comment(props) {
   const comment = props.comment;
-  const show = props.currentUser &&
-    props.currentUser.username === comment.author.username;
+  const show = props.currentUser
+    && props.currentUser.username === comment.author.username;
   return (
     <div className="card">
       <div className="card-block">
@@ -14,13 +14,15 @@ const Comment = props => {
       <div className="card-footer">
         <Link
           to={`/@${comment.author.username}`}
-          className="comment-author">
+          className="comment-author"
+        >
           <img src={comment.author.image} className="comment-author-img" alt={comment.author.username} />
         </Link>
         &nbsp;
         <Link
           to={`/@${comment.author.username}`}
-          className="comment-author">
+          className="comment-author"
+        >
           {comment.author.username}
         </Link>
         <span className="date-posted">
@@ -30,6 +32,6 @@ const Comment = props => {
       </div>
     </div>
   );
-};
+}
 
 export default Comment;

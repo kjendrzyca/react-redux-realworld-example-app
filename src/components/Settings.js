@@ -1,11 +1,14 @@
-import ListErrors from './ListErrors';
 import React from 'react';
-import agent from '../agent';
 import { connect } from 'react-redux';
+
+import agent from '../agent';
+
+import ListErrors from './ListErrors';
+
 import {
   SETTINGS_SAVED,
   SETTINGS_PAGE_UNLOADED,
-  LOGOUT
+  LOGOUT,
 } from '../constants/actionTypes';
 
 class SettingsForm extends React.Component {
@@ -17,16 +20,16 @@ class SettingsForm extends React.Component {
       username: '',
       bio: '',
       email: '',
-      password: ''
+      password: '',
     };
 
-    this.updateState = field => ev => {
+    this.updateState = (field) => (ev) => {
       const state = this.state;
       const newState = Object.assign({}, state, { [field]: ev.target.value });
       this.setState(newState);
     };
 
-    this.submitForm = ev => {
+    this.submitForm = (ev) => {
       ev.preventDefault();
 
       const user = Object.assign({}, this.state);
@@ -44,7 +47,7 @@ class SettingsForm extends React.Component {
         image: this.props.currentUser.image || '',
         username: this.props.currentUser.username,
         bio: this.props.currentUser.bio,
-        email: this.props.currentUser.email
+        email: this.props.currentUser.email,
       });
     }
   }
@@ -55,7 +58,7 @@ class SettingsForm extends React.Component {
         image: nextProps.currentUser.image || '',
         username: nextProps.currentUser.username,
         bio: nextProps.currentUser.bio,
-        email: nextProps.currentUser.email
+        email: nextProps.currentUser.email,
       }));
     }
   }
@@ -71,7 +74,8 @@ class SettingsForm extends React.Component {
               type="text"
               placeholder="URL of profile picture"
               value={this.state.image}
-              onChange={this.updateState('image')} />
+              onChange={this.updateState('image')}
+            />
           </fieldset>
 
           <fieldset className="form-group">
@@ -80,7 +84,8 @@ class SettingsForm extends React.Component {
               type="text"
               placeholder="Username"
               value={this.state.username}
-              onChange={this.updateState('username')} />
+              onChange={this.updateState('username')}
+            />
           </fieldset>
 
           <fieldset className="form-group">
@@ -89,8 +94,8 @@ class SettingsForm extends React.Component {
               rows="8"
               placeholder="Short bio about you"
               value={this.state.bio}
-              onChange={this.updateState('bio')}>
-            </textarea>
+              onChange={this.updateState('bio')}
+            />
           </fieldset>
 
           <fieldset className="form-group">
@@ -99,7 +104,8 @@ class SettingsForm extends React.Component {
               type="email"
               placeholder="Email"
               value={this.state.email}
-              onChange={this.updateState('email')} />
+              onChange={this.updateState('email')}
+            />
           </fieldset>
 
           <fieldset className="form-group">
@@ -108,13 +114,15 @@ class SettingsForm extends React.Component {
               type="password"
               placeholder="New Password"
               value={this.state.password}
-              onChange={this.updateState('password')} />
+              onChange={this.updateState('password')}
+            />
           </fieldset>
 
           <button
             className="btn btn-lg btn-primary pull-xs-right"
             type="submit"
-            disabled={this.state.inProgress}>
+            disabled={this.state.inProgress}
+          >
             Update Settings
           </button>
 
@@ -124,16 +132,15 @@ class SettingsForm extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ...state.settings,
-  currentUser: state.common.currentUser
+  currentUser: state.common.currentUser,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   onClickLogout: () => dispatch({ type: LOGOUT }),
-  onSubmitForm: user =>
-    dispatch({ type: SETTINGS_SAVED, payload: agent.Auth.save(user) }),
-  onUnload: () => dispatch({ type: SETTINGS_PAGE_UNLOADED })
+  onSubmitForm: (user) => dispatch({ type: SETTINGS_SAVED, payload: agent.Auth.save(user) }),
+  onUnload: () => dispatch({ type: SETTINGS_PAGE_UNLOADED }),
 });
 
 class Settings extends React.Component {
@@ -146,17 +153,20 @@ class Settings extends React.Component {
 
               <h1 className="text-xs-center">Your Settings</h1>
 
-              <ListErrors errors={this.props.errors}></ListErrors>
+              <ListErrors errors={this.props.errors} />
 
               <SettingsForm
                 currentUser={this.props.currentUser}
-                onSubmitForm={this.props.onSubmitForm} />
+                onSubmitForm={this.props.onSubmitForm}
+              />
 
               <hr />
 
               <button
                 className="btn btn-outline-danger"
-                onClick={this.props.onClickLogout}>
+                onClick={this.props.onClickLogout}
+                type="submit"
+              >
                 Or click here to logout.
               </button>
 

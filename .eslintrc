@@ -1,3 +1,18 @@
 {
-  "extends": ["react-app"]
+  "extends": ["airbnb", "airbnb/hooks"],
+  "rules": {
+    "max-classes-per-file": "off",
+    "prefer-destructuring": "off",
+    "prefer-object-spread": "off",
+
+    "react/destructuring-assignment": "off",
+    "react/prop-types": "off",
+    "react/no-deprecated": "off",
+    "react/jsx-filename-extension": "off",
+    "react/prefer-stateless-function": "off",
+    "react/no-access-state-in-setstate": "warn",
+    "no-unused-vars": "warn",
+    "no-case-declarations": "off",
+    "arrow-parens": "warn"
+  }
 }
