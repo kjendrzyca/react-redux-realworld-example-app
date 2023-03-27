@@ -5,12 +5,10 @@ import { push } from 'react-router-redux';
 import agent from '../agent';
 import Header from './Header';
 import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
-// eslint-disable-next-line import/no-named-as-default, import/no-named-as-default-member
 import Article from './Article';
 import Editor from './Editor';
 import Home from './Home';
 import Login from './Login';
-// eslint-disable-next-line import/no-named-as-default
 import Profile from './Profile';
 import ProfileFavorites from './ProfileFavorites';
 import Register from './Register';
