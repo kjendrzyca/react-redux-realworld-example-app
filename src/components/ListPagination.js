@@ -2,15 +2,14 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import agent from '../agent';
 import { SET_PAGE } from '../constants/actionTypes';
 
-const mapDispatchToProps = (dispatch) => ({
-  onSetPage: (page, payload) => dispatch({ type: SET_PAGE, page, payload }),
-});
-
 function ListPagination(props) {
+  const dispatch = useDispatch();
+  const onSetPage = (page, payload) => dispatch({ type: SET_PAGE, page, payload });
+
   if (props.articlesCount <= 10) {
     return null;
   }
@@ -23,9 +22,9 @@ function ListPagination(props) {
 
   const setPage = (page) => {
     if (props.pager) {
-      props.onSetPage(page, props.pager(page));
+      onSetPage(page, props.pager(page));
     } else {
-      props.onSetPage(page, agent.Articles.all(page));
+      onSetPage(page, agent.Articles.all(page));
     }
   };
 
@@ -57,4 +56,4 @@ function ListPagination(props) {
   );
 }
 
-export default connect(() => ({}), mapDispatchToProps)(ListPagination);
+export default ListPagination;
