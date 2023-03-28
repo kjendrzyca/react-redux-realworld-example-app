@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { push } from 'connected-react-router';
 import agent from '../agent';
@@ -15,23 +15,25 @@ import Register from './Register';
 import Settings from './Settings';
 import { store } from '../store';
 
-const mapStateToProps = (state) => ({
-  appLoaded: state.common.appLoaded,
-  appName: state.common.appName,
-  currentUser: state.common.currentUser,
-  redirectTo: state.common.redirectTo,
-});
+// const mapStateToProps = (state) => ({
 
-const mapDispatchToProps = (dispatch) => ({
-  onLoad: (payload, token) => dispatch({
-    type: APP_LOAD, payload, token, skipTracking: true,
-  }),
-  onRedirect: () => dispatch({ type: REDIRECT }),
-});
+// });
 
-function App({
-  onLoad, redirectTo, onRedirect, appLoaded, appName, currentUser,
-}) {
+// const mapDispatchToProps = (dispatch) => ({
+//   onLoad: (payload, token) => dispatch({
+//     type: APP_LOAD, payload, token, skipTracking: true,
+//   }),
+//   onRedirect: () => dispatch({ type: REDIRECT }),
+// });
+
+function App() {
+  const dispatch = useDispatch();
+
+  const appLoaded = useSelector(state => state.common.appLoaded);
+  const appName = useSelector(state => state.common.appName);
+  const currentUser = useSelector(state => state.common.currentUser);
+  const redirectTo = useSelector(state => state.common.redirectTo);
+
   useEffect(() => {
     // eslint-disable-next-line no-undef
     const token = window.localStorage.getItem('jwt');
@@ -39,16 +41,20 @@ function App({
       agent.setToken(token);
     }
 
-    onLoad(token ? agent.Auth.current() : null, token);
-  }, [onLoad]);
+    const payload = token ? agent.Auth.current() : null;
+
+    dispatch({
+      type: APP_LOAD, payload, token, skipTracking: true,
+    });
+  }, [dispatch]);
 
   useEffect(() => {
     if (redirectTo) {
       // context.router.replace(nextProps.redirectTo);
       store.dispatch(push(redirectTo));
-      onRedirect();
+      dispatch({ type: REDIRECT });
     }
-  }, [onRedirect, redirectTo]);
+  }, [dispatch, redirectTo]);
 
   if (appLoaded) {
     return (
@@ -85,4 +91,4 @@ function App({
 //   router: PropTypes.object.isRequired
 // };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
