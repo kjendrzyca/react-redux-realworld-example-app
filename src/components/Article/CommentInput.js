@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import agent from '../../agent';
 import { ADD_COMMENT } from '../../constants/actionTypes';
 
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit: (payload) => dispatch({ type: ADD_COMMENT, payload }),
-});
-
 function CommentInput(props) {
+  const dispatch = useDispatch();
+  const onSubmit = (payload) => dispatch({ type: ADD_COMMENT, payload });
   const [body, setBody] = useState('');
 
   const createComment = (ev) => {
@@ -17,7 +15,7 @@ function CommentInput(props) {
       { body },
     );
     setBody('');
-    props.onSubmit(payload);
+    onSubmit(payload);
   };
 
   const onChangeHandler = (ev) => {
@@ -52,4 +50,4 @@ function CommentInput(props) {
   );
 }
 
-export default connect(() => ({}), mapDispatchToProps)(CommentInput);
+export default CommentInput;
