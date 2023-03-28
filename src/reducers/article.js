@@ -5,7 +5,6 @@ import {
   DELETE_COMMENT,
 } from '../constants/actionTypes';
 
-// eslint-disable-next-line default-param-last
 export default (state = {}, action) => {
   switch (action.type) {
     case ARTICLE_PAGE_LOADED:

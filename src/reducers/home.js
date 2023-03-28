@@ -1,6 +1,5 @@
 import { HOME_PAGE_LOADED, HOME_PAGE_UNLOADED } from '../constants/actionTypes';
 
-// eslint-disable-next-line default-param-last
 export default (state = {}, action) => {
   switch (action.type) {
     case HOME_PAGE_LOADED:

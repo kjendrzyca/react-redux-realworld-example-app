@@ -4,7 +4,6 @@ import {
   ASYNC_START,
 } from '../constants/actionTypes';
 
-// eslint-disable-next-line default-param-last
 export default (state = {}, action) => {
   switch (action.type) {
     case SETTINGS_SAVED:

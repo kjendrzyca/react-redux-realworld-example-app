@@ -23,7 +23,6 @@ const defaultState = {
   viewChangeCounter: 0,
 };
 
-// eslint-disable-next-line default-param-last
 export default (state = defaultState, action) => {
   switch (action.type) {
     case APP_LOAD:

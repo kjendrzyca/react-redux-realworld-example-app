@@ -12,7 +12,6 @@ import {
   UPDATE_FIELD_EDITOR,
 } from '../constants/actionTypes';
 
-// eslint-disable-next-line default-param-last
 export default (state = {}, action) => {
   switch (action.type) {
     case EDITOR_PAGE_LOADED:
