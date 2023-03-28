@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ArticleList from '../ArticleList';
 import agent from '../../agent';
 import { CHANGE_TAB } from '../../constants/actionTypes';
@@ -63,46 +63,45 @@ function TagFilterTab(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  ...state.articleList,
-  tags: state.home.tags,
-  token: state.common.token,
-});
+function MainView() {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.common.token);
+  const {
+    currentPage, articles, articlesCount, loading, pager, tab, tag,
+  } = useSelector((state) => state.articleList);
 
-const mapDispatchToProps = (dispatch) => ({
-  onTabClick: (tab, pager, payload) => dispatch({
+  // eslint-disable-next-line no-shadow
+  const onTabClick = (tab, pager, payload) => dispatch({
     type: CHANGE_TAB, tab, pager, payload,
-  }),
-});
+  });
 
-function MainView(props) {
   return (
     <div className="col-md-9">
       <div className="feed-toggle">
         <ul className="nav nav-pills outline-active">
 
           <YourFeedTab
-            token={props.token}
-            tab={props.tab}
-            onTabClick={props.onTabClick}
+            token={token}
+            tab={tab}
+            onTabClick={onTabClick}
           />
 
-          <GlobalFeedTab tab={props.tab} onTabClick={props.onTabClick} />
+          <GlobalFeedTab tab={tab} onTabClick={onTabClick} />
 
-          <TagFilterTab tag={props.tag} />
+          <TagFilterTab tag={tag} />
 
         </ul>
       </div>
 
       <ArticleList
-        pager={props.pager}
-        articles={props.articles}
-        loading={props.loading}
-        articlesCount={props.articlesCount}
-        currentPage={props.currentPage}
+        pager={pager}
+        articles={articles}
+        loading={loading}
+        articlesCount={articlesCount}
+        currentPage={currentPage}
       />
     </div>
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainView);
+export default MainView;
