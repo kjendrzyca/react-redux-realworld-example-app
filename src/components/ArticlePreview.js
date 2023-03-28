@@ -1,24 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import agent from '../agent';
 import { ARTICLE_FAVORITED, ARTICLE_UNFAVORITED } from '../constants/actionTypes';
 
 const FAVORITED_CLASS = 'btn btn-sm btn-primary';
 const NOT_FAVORITED_CLASS = 'btn btn-sm btn-outline-primary';
 
-const mapDispatchToProps = (dispatch) => ({
-  favorite: (slug) => dispatch({
+function ArticlePreview(props) {
+  const dispatch = useDispatch();
+
+  const favorite = (slug) => dispatch({
     type: ARTICLE_FAVORITED,
     payload: agent.Articles.favorite(slug),
-  }),
-  unfavorite: (slug) => dispatch({
+  });
+
+  const unfavorite = (slug) => dispatch({
     type: ARTICLE_UNFAVORITED,
     payload: agent.Articles.unfavorite(slug),
-  }),
-});
+  });
 
-function ArticlePreview(props) {
   const article = props.article;
   const favoriteButtonClass = article.favorited
     ? FAVORITED_CLASS
@@ -27,9 +28,9 @@ function ArticlePreview(props) {
   const handleClick = (ev) => {
     ev.preventDefault();
     if (article.favorited) {
-      props.unfavorite(article.slug);
+      unfavorite(article.slug);
     } else {
-      props.favorite(article.slug);
+      favorite(article.slug);
     }
   };
 
@@ -77,4 +78,4 @@ function ArticlePreview(props) {
   );
 }
 
-export default connect(() => ({}), mapDispatchToProps)(ArticlePreview);
+export default ArticlePreview;
