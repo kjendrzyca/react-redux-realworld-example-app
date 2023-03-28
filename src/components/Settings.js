@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import agent from '../agent';
 
@@ -24,14 +24,14 @@ function SettingsForm(props) {
   );
 
   const updateState = (field) => (ev) => {
-    const newState = Object.assign({}, state, { [field]: ev.target.value });
+    const newState = { ...state, [field]: ev.target.value };
     setState(newState);
   };
 
   const submitForm = (ev) => {
     ev.preventDefault();
 
-    const user = Object.assign({}, state);
+    const user = { ...state };
 
     if (!user.password) {
       delete user.password;
@@ -120,18 +120,19 @@ function SettingsForm(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  ...state.settings,
-  currentUser: state.common.currentUser,
-});
+function Settings() {
+  const dispatch = useDispatch();
 
-const mapDispatchToProps = (dispatch) => ({
-  onClickLogout: () => dispatch({ type: LOGOUT }),
-  onSubmitForm: (user) => dispatch({ type: SETTINGS_SAVED, payload: agent.Auth.save(user) }),
-  onUnload: () => dispatch({ type: SETTINGS_PAGE_UNLOADED }),
-});
+  const currentUser = useSelector((state) => state.common.currentUser);
+  const settingsErrors = useSelector((state) => state.settings.errors);
 
-function Settings(props) {
+  useEffect(() => () => {
+    dispatch({ type: SETTINGS_PAGE_UNLOADED });
+  }, [dispatch]);
+
+  const onClickLogout = () => dispatch({ type: LOGOUT });
+  const onSubmitForm = (user) => dispatch({ type: SETTINGS_SAVED, payload: agent.Auth.save(user) });
+
   return (
     <div className="settings-page">
       <div className="container page">
@@ -140,18 +141,18 @@ function Settings(props) {
 
             <h1 className="text-xs-center">Your Settings</h1>
 
-            <ListErrors errors={props.errors} />
+            <ListErrors errors={settingsErrors} />
 
             <SettingsForm
-              currentUser={props.currentUser}
-              onSubmitForm={props.onSubmitForm}
+              currentUser={currentUser}
+              onSubmitForm={onSubmitForm}
             />
 
             <hr />
 
             <button
               className="btn btn-outline-danger"
-              onClick={props.onClickLogout}
+              onClick={onClickLogout}
               type="submit"
             >
               Or click here to logout.
@@ -164,4 +165,4 @@ function Settings(props) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+export default Settings;
