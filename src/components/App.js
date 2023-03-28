@@ -15,17 +15,6 @@ import Register from './Register';
 import Settings from './Settings';
 import { store } from '../store';
 
-// const mapStateToProps = (state) => ({
-
-// });
-
-// const mapDispatchToProps = (dispatch) => ({
-//   onLoad: (payload, token) => dispatch({
-//     type: APP_LOAD, payload, token, skipTracking: true,
-//   }),
-//   onRedirect: () => dispatch({ type: REDIRECT }),
-// });
-
 function App() {
   const dispatch = useDispatch();
 
