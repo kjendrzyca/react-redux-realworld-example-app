@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ListErrors from './ListErrors';
 import agent from '../agent';
 import {
@@ -17,22 +17,13 @@ import {
   UPDATE_FIELD_EDITOR,
 } from '../constants/actionTypes';
 
-const mapStateToProps = (state) => ({
-  ...state.editor,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onAddTag: () => dispatch({ type: ADD_TAG }),
-  onLoad: (payload) => dispatch({ type: EDITOR_PAGE_LOADED, payload }),
-  onRemoveTag: (tag) => dispatch({ type: REMOVE_TAG, tag }),
-  onSubmit: (payload) => dispatch({ type: ARTICLE_SUBMITTED, payload }),
-  // 💡 hint: call PAGE_UNLOADED here as well
-  onUnload: (payload) => dispatch({ type: EDITOR_PAGE_UNLOADED }),
-  onUpdateField: (key, value) => dispatch({ type: UPDATE_FIELD_EDITOR, key, value }),
-});
-
 function Editor(props) {
-  const updateFieldEvent = (key) => (ev) => props.onUpdateField(key, ev.target.value);
+  const dispatch = useDispatch();
+  const editor = useSelector((state) => state.editor);
+
+  const onUpdateField = (key, value) => dispatch({ type: UPDATE_FIELD_EDITOR, key, value });
+
+  const updateFieldEvent = (key) => (ev) => onUpdateField(key, ev.target.value);
   const changeTitle = updateFieldEvent('title');
   const changeDescription = updateFieldEvent('description');
   const changeBody = updateFieldEvent('body');
@@ -41,41 +32,44 @@ function Editor(props) {
   const watchForEnter = (ev) => {
     if (ev.keyCode === 13) {
       ev.preventDefault();
-      props.onAddTag();
+      dispatch({ type: ADD_TAG });
     }
   };
 
   const removeTagHandler = (tag) => () => {
-    props.onRemoveTag(tag);
+    dispatch({ type: REMOVE_TAG, tag });
   };
 
   const submitForm = (ev) => {
     ev.preventDefault();
     const article = {
-      title: props.title,
-      description: props.description,
-      body: props.body,
-      tagList: props.tagList,
+      title: editor.title,
+      description: editor.description,
+      body: editor.body,
+      tagList: editor.tagList,
     };
 
-    const slug = { slug: props.articleSlug };
-    const promise = props.articleSlug
+    const slug = { slug: editor.articleSlug };
+    const promise = editor.articleSlug
       ? agent.Articles.update(Object.assign(article, slug))
       : agent.Articles.create(article);
 
-    props.onSubmit(promise);
+    dispatch({ type: ARTICLE_SUBMITTED, payload: promise });
   };
 
-  const { match: { params: { slug } }, onLoad, onUnload } = props;
+  const { match: { params: { slug } } } = props;
   useEffect(() => {
+    const onLoad = (payload) => dispatch({ type: EDITOR_PAGE_LOADED, payload });
+
     if (slug) {
       onLoad(agent.Articles.get(slug));
     } else {
       onLoad(null);
     }
 
-    return () => onUnload();
-  }, [onLoad, onUnload, slug]);
+    // 💡 hint: call PAGE_UNLOADED here as well
+    return () => dispatch({ type: EDITOR_PAGE_UNLOADED });
+  }, [dispatch, slug]);
 
   return (
     <div className="editor-page">
@@ -83,7 +77,7 @@ function Editor(props) {
         <div className="row">
           <div className="col-md-10 offset-md-1 col-xs-12">
 
-            <ListErrors errors={props.errors} />
+            <ListErrors errors={editor.errors} />
 
             <form>
               <fieldset>
@@ -93,7 +87,7 @@ function Editor(props) {
                     className="form-control form-control-lg"
                     type="text"
                     placeholder="Article Title"
-                    value={props.title}
+                    value={editor.title}
                     onChange={changeTitle}
                   />
                 </fieldset>
@@ -103,7 +97,7 @@ function Editor(props) {
                     className="form-control"
                     type="text"
                     placeholder="What's this article about?"
-                    value={props.description}
+                    value={editor.description}
                     onChange={changeDescription}
                   />
                 </fieldset>
@@ -113,7 +107,7 @@ function Editor(props) {
                     className="form-control"
                     rows="8"
                     placeholder="Write your article (in markdown)"
-                    value={props.body}
+                    value={editor.body}
                     onChange={changeBody}
                   />
                 </fieldset>
@@ -123,14 +117,14 @@ function Editor(props) {
                     className="form-control"
                     type="text"
                     placeholder="Enter tags"
-                    value={props.tagInput}
+                    value={editor.tagInput}
                     onChange={changeTagInput}
                     onKeyUp={watchForEnter}
                   />
 
                   <div className="tag-list">
                     {
-                      (props.tagList || []).map((tag) => (
+                      (editor.tagList || []).map((tag) => (
                         <span className="tag-default tag-pill" key={tag}>
                           <i
                             className="ion-close-round"
@@ -146,7 +140,7 @@ function Editor(props) {
                 <button
                   className="btn btn-lg pull-xs-right btn-primary"
                   type="button"
-                  disabled={props.inProgress}
+                  disabled={editor.inProgress}
                   onClick={submitForm}
                 >
                   Publish Article
@@ -162,4 +156,4 @@ function Editor(props) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Editor);
+export default Editor;
