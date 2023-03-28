@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ListErrors from './ListErrors';
 import agent from '../agent';
 import {
@@ -9,34 +9,23 @@ import {
   REGISTER_PAGE_UNLOADED,
 } from '../constants/actionTypes';
 
-const mapStateToProps = (state) => ({ ...state.auth });
+function Register() {
+  const dispatch = useDispatch();
+  const {
+    email, password, username, inProgress, errors,
+  } = useSelector((state) => state.auth);
 
-const mapDispatchToProps = (dispatch) => ({
-  onChangeEmail: (value) => dispatch({ type: UPDATE_FIELD_AUTH, key: 'email', value }),
-  onChangePassword: (value) => dispatch({ type: UPDATE_FIELD_AUTH, key: 'password', value }),
-  onChangeUsername: (value) => dispatch({ type: UPDATE_FIELD_AUTH, key: 'username', value }),
-  onSubmit: (username, email, password) => {
-    const payload = agent.Auth.register(username, email, password);
-    dispatch({ type: REGISTER, payload });
-  },
-  onUnload: () => dispatch({ type: REGISTER_PAGE_UNLOADED }),
-});
-
-function Register(props) {
-  const changeEmail = (ev) => props.onChangeEmail(ev.target.value);
-  const changePassword = (ev) => props.onChangePassword(ev.target.value);
-  const changeUsername = (ev) => props.onChangeUsername(ev.target.value);
+  const changeEmail = (ev) => dispatch({ type: UPDATE_FIELD_AUTH, key: 'email', value: ev.target.value });
+  const changePassword = (ev) => dispatch({ type: UPDATE_FIELD_AUTH, key: 'password', value: ev.target.value });
+  const changeUsername = (ev) => dispatch({ type: UPDATE_FIELD_AUTH, key: 'username', value: ev.target.value });
+  // eslint-disable-next-line no-shadow
   const submitForm = (username, email, password) => (ev) => {
     ev.preventDefault();
-    props.onSubmit(username, email, password);
+    const payload = agent.Auth.register(username, email, password);
+    dispatch({ type: REGISTER, payload });
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => () => props.onUnload(), []);
-
-  const email = props.email;
-  const password = props.password;
-  const username = props.username;
+  useEffect(() => () => dispatch({ type: REGISTER_PAGE_UNLOADED }), [dispatch]);
 
   return (
     <div className="auth-page">
@@ -51,7 +40,7 @@ function Register(props) {
               </Link>
             </p>
 
-            <ListErrors errors={props.errors} />
+            <ListErrors errors={errors} />
 
             <form onSubmit={submitForm(username, email, password)}>
               <fieldset>
@@ -61,7 +50,7 @@ function Register(props) {
                     className="form-control form-control-lg"
                     type="text"
                     placeholder="Username"
-                    value={props.username}
+                    value={username}
                     onChange={changeUsername}
                   />
                 </fieldset>
@@ -71,7 +60,7 @@ function Register(props) {
                     className="form-control form-control-lg"
                     type="email"
                     placeholder="Email"
-                    value={props.email}
+                    value={email}
                     onChange={changeEmail}
                   />
                 </fieldset>
@@ -81,7 +70,7 @@ function Register(props) {
                     className="form-control form-control-lg"
                     type="password"
                     placeholder="Password"
-                    value={props.password}
+                    value={password}
                     onChange={changePassword}
                   />
                 </fieldset>
@@ -89,7 +78,7 @@ function Register(props) {
                 <button
                   className="btn btn-lg btn-primary pull-xs-right"
                   type="submit"
-                  disabled={props.inProgress}
+                  disabled={inProgress}
                 >
                   Sign up
                 </button>
@@ -104,4 +93,4 @@ function Register(props) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default Register;
