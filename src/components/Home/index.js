@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Banner from './Banner';
 import MainView from './MainView';
 import Tags from './Tags';
@@ -12,39 +12,35 @@ import {
 
 const Promise = global.Promise;
 
-const mapStateToProps = (state) => ({
-  ...state.home,
-  appName: state.common.appName,
-  token: state.common.token,
-});
+function Home() {
+  const dispatch = useDispatch();
+  const appName = useSelector((state) => state.common.appName);
+  const token = useSelector((state) => state.common.token);
+  const tags = useSelector((state) => state.home.tags);
 
-const mapDispatchToProps = (dispatch) => ({
-  onClickTag: (tag, pager, payload) => dispatch({
-    type: APPLY_TAG_FILTER, tag, pager, payload,
-  }),
-  onLoad: (tab, pager, payload) => dispatch({
-    type: HOME_PAGE_LOADED, tab, pager, payload,
-  }),
-  onUnload: () => dispatch({ type: HOME_PAGE_UNLOADED }),
-});
-
-function Home(props) {
   useEffect(() => {
-    const tab = props.token ? 'feed' : 'all';
-    const articlesPromise = props.token
+    const tab = token ? 'feed' : 'all';
+    const articlesPromise = token
       ? agent.Articles.feed
       : agent.Articles.all;
 
-    props.onLoad(tab, articlesPromise, Promise.all([agent.Tags.getAll(), articlesPromise()]));
+    const payload = Promise.all([agent.Tags.getAll(), articlesPromise()]);
 
-    return () => props.onUnload();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    dispatch({
+      type: HOME_PAGE_LOADED, tab, pager: articlesPromise, payload,
+    });
+
+    return () => dispatch({ type: HOME_PAGE_UNLOADED });
+  }, [dispatch, token]);
+
+  const onClickTag = (tag, pager, payload) => dispatch({
+    type: APPLY_TAG_FILTER, tag, pager, payload,
+  });
 
   return (
     <div className="home-page">
 
-      <Banner token={props.token} appName={props.appName} />
+      <Banner token={token} appName={appName} />
 
       <div className="container page">
         <div className="row">
@@ -56,17 +52,16 @@ function Home(props) {
               <p>Popular Tags</p>
 
               <Tags
-                tags={props.tags}
-                onClickTag={props.onClickTag}
+                tags={tags}
+                onClickTag={onClickTag}
               />
 
             </div>
           </div>
         </div>
       </div>
-
     </div>
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;
