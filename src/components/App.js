@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
-import { push } from 'react-router-redux';
+import { push } from 'connected-react-router';
 import agent from '../agent';
 import Header from './Header';
 import { APP_LOAD, REDIRECT } from '../constants/actionTypes';

@@ -1,20 +1,20 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import agent from '../../agent';
 
 // 💡 hint: this should be replaced with a generic ROOT_REDIRECT action, see `common.js` reducer
 import { DELETE_ARTICLE } from '../../constants/actionTypes';
 
-const mapDispatchToProps = (dispatch) => ({
-  // 💡 hint: this payload is not used
-  onClickDelete: (payload) => dispatch({ type: DELETE_ARTICLE, payload }),
-});
-
 function ArticleActions(props) {
-  const article = props.article;
+  const dispatch = useDispatch();
+
+  // 💡 hint: this payload is not used
+  const onClickDelete = (payload) => dispatch({ type: DELETE_ARTICLE, payload });
+
+  const { article } = props;
   const del = () => {
-    props.onClickDelete(agent.Articles.del(article.slug));
+    onClickDelete(agent.Articles.del(article.slug));
   };
   if (props.canModify) {
     return (
@@ -44,4 +44,4 @@ function ArticleActions(props) {
   );
 }
 
-export default connect(() => ({}), mapDispatchToProps)(ArticleActions);
+export default ArticleActions;
