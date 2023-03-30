@@ -8,7 +8,7 @@
     "no-case-declarations": "off",
     "arrow-parens": "warn",
 
-    "react/destructuring-assignment": "off",
+    "react/destructuring-assignment": "warn",
     "react/prop-types": "off",
     "react/no-deprecated": "warn",
     "react/prefer-stateless-function": "off",
