@@ -7,7 +7,7 @@ import Header from './Header';
 import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
 import Article from './Article';
 import Editor from './Editor';
-import Home from './Home';
+import Home from '../Home';
 import Login from './Login';
 import Profile from './Profile';
 import ProfileFavorites from './ProfileFavorites';

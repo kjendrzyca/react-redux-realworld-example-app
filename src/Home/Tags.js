@@ -1,5 +1,5 @@
 import React from 'react';
-import agent from '../../agent';
+import agent from '../agent';
 
 function Tags(props) {
   const tags = props.tags;
