@@ -15,7 +15,7 @@ const tokenPlugin = (req) => {
   }
 };
 
-const requests = {
+export const requests = {
   del: (url) => superagent.del(`${API_ROOT}${url}`).use(tokenPlugin).then(responseBody),
   get: (url) => superagent.get(`${API_ROOT}${url}`).use(tokenPlugin).then(responseBody),
   put: (url, body) => superagent.put(`${API_ROOT}${url}`, body).use(tokenPlugin).then(responseBody),
@@ -46,7 +46,6 @@ const Articles = {
   get: (slug) => requests.get(`/articles/${slug}`),
   unfavorite: (slug) => requests.del(`/articles/${slug}/favorite`),
   update: (article) => requests.put(`/articles/${article.slug}`, { article: omitSlug(article) }),
-  create: (article) => requests.post('/articles', { article }),
 };
 
 const Comments = {

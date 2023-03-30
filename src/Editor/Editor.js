@@ -12,6 +12,7 @@ import {
   UPDATE_FIELD_EDITOR,
 } from './store/actionTypes';
 import { ARTICLE_SUBMITTED, PAGE_UNLOADED } from '../constants/actionTypes';
+import { createArticle } from './api';
 
 export function Editor(props) {
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ export function Editor(props) {
     const slug = { slug: editor.articleSlug };
     const promise = editor.articleSlug
       ? agent.Articles.update(Object.assign(article, slug))
-      : agent.Articles.create(article);
+      : createArticle(article);
 
     dispatch({ type: ARTICLE_SUBMITTED, payload: promise });
   };
