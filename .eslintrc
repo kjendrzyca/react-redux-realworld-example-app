@@ -17,6 +17,7 @@
 
     "import/no-named-as-default": "warn",
     "import/no-named-as-default-member": "warn",
+    "import/prefer-default-export": "off",
 
     // not available in our version of eslint
     "no-restricted-exports": "off",
