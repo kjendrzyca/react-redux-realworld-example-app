@@ -5,7 +5,7 @@ import {
   DELETE_COMMENT,
 } from './actionTypes';
 
-export default (state = {}, action) => {
+export const articleReducer = (state = {}, action) => {
   switch (action.type) {
     case ARTICLE_PAGE_LOADED:
       return {

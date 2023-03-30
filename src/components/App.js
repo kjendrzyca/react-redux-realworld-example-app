@@ -5,8 +5,8 @@ import { push } from 'connected-react-router';
 import agent from '../agent';
 import Header from './Header';
 import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
-import Article from '../Article';
-import Editor from '../Editor/Editor';
+import { Article } from '../Article';
+import { Editor } from '../Editor';
 import Home from '../Home';
 import Login from './Login';
 import Profile from './Profile';
@@ -18,10 +18,10 @@ import { store } from '../store';
 function App() {
   const dispatch = useDispatch();
 
-  const appLoaded = useSelector(state => state.common.appLoaded);
-  const appName = useSelector(state => state.common.appName);
-  const currentUser = useSelector(state => state.common.currentUser);
-  const redirectTo = useSelector(state => state.common.redirectTo);
+  const appLoaded = useSelector((state) => state.common.appLoaded);
+  const appName = useSelector((state) => state.common.appName);
+  const currentUser = useSelector((state) => state.common.currentUser);
+  const redirectTo = useSelector((state) => state.common.redirectTo);
 
   useEffect(() => {
     // eslint-disable-next-line no-undef

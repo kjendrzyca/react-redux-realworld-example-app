@@ -13,7 +13,7 @@ import {
 } from './store/actionTypes';
 import { ARTICLE_SUBMITTED, PAGE_UNLOADED } from '../constants/actionTypes';
 
-function Editor(props) {
+export function Editor(props) {
   const dispatch = useDispatch();
   const editor = useSelector((state) => state.editor);
 
@@ -154,5 +154,3 @@ function Editor(props) {
     </div>
   );
 }
-
-export default Editor;

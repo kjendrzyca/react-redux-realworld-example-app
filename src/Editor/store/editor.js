@@ -7,7 +7,7 @@ import {
   UPDATE_FIELD_EDITOR,
 } from './actionTypes';
 
-export default (state = {}, action) => {
+export const editorReducer = (state = {}, action) => {
   switch (action.type) {
     case EDITOR_PAGE_LOADED:
       return {
