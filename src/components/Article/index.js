@@ -34,7 +34,7 @@ function Article(props) {
 
   const markup = { __html: marked(article.body, { sanitize: true }) };
 
-  const canModify = props.currentUser
+  const canModify = currentUser
     && currentUser.username === article.author.username;
 
   return (
