@@ -8,7 +8,6 @@ import {
   REGISTER,
   ROOT_REDIRECT,
   PAGE_UNLOADED,
-  EDITOR_PAGE_UNLOADED,
   HOME_PAGE_UNLOADED,
   PROFILE_PAGE_UNLOADED,
   PROFILE_FAVORITES_PAGE_UNLOADED,
@@ -59,7 +58,6 @@ export default (state = defaultState, action) => {
     case ROOT_REDIRECT:
       return { ...state, redirectTo: '/' };
     case PAGE_UNLOADED:
-    case EDITOR_PAGE_UNLOADED:
     case HOME_PAGE_UNLOADED:
     case PROFILE_PAGE_UNLOADED:
     case PROFILE_FAVORITES_PAGE_UNLOADED:

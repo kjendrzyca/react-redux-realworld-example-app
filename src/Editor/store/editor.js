@@ -1,16 +1,11 @@
+import { ARTICLE_SUBMITTED, ASYNC_START } from '../../constants/actionTypes';
 import {
-  // 💡 hint: unfortunately we need to use common actions here
-  // this is bad, but fixing real-world is not an easy task
-  ARTICLE_SUBMITTED,
-  ASYNC_START,
-
-  // 💡 hint: those can be safely moved to the local `actionTypes`
   EDITOR_PAGE_LOADED,
   EDITOR_PAGE_UNLOADED,
   ADD_TAG,
   REMOVE_TAG,
   UPDATE_FIELD_EDITOR,
-} from '../constants/actionTypes';
+} from './actionTypes';
 
 export default (state = {}, action) => {
   switch (action.type) {

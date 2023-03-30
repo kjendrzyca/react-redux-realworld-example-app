@@ -5,17 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import ListErrors from '../components/ListErrors';
 import agent from '../agent';
 import {
-  // 💡 hint: this action needs to be here
-  // also you need PAGE_UNLOADED here
-  ARTICLE_SUBMITTED,
-
-  // 💡 hint: those actions should be moved to `./store/actionTypes`
   ADD_TAG,
   EDITOR_PAGE_LOADED,
   REMOVE_TAG,
   EDITOR_PAGE_UNLOADED,
   UPDATE_FIELD_EDITOR,
-} from '../constants/actionTypes';
+} from './store/actionTypes';
+import { ARTICLE_SUBMITTED, PAGE_UNLOADED } from '../constants/actionTypes';
 
 function Editor(props) {
   const dispatch = useDispatch();
@@ -68,7 +64,10 @@ function Editor(props) {
     }
 
     // 💡 hint: call PAGE_UNLOADED here as well
-    return () => dispatch({ type: EDITOR_PAGE_UNLOADED });
+    return () => {
+      dispatch({ type: EDITOR_PAGE_UNLOADED });
+      dispatch({ type: PAGE_UNLOADED });
+    };
   }, [dispatch, slug]);
 
   return (
