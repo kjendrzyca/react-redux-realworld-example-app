@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import agent from '../agent';
+import agent from '../api';
 
 import ListErrors from './ListErrors';
 

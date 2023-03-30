@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import agent from '../agent';
+import agent from '../api';
 import { ADD_COMMENT } from './store/actionTypes';
 
 function CommentInput(props) {

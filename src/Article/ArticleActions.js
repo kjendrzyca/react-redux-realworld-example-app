@@ -1,13 +1,11 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import agent from '../agent';
+import agent from '../api';
 import { ROOT_REDIRECT } from '../constants/actionTypes';
 
 function ArticleActions(props) {
   const dispatch = useDispatch();
-
-  // 💡 hint: this payload is not used
   const onClickDelete = () => dispatch({ type: ROOT_REDIRECT });
 
   const { article } = props;

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Banner from './Banner';
 import MainView from './MainView';
 import Tags from './Tags';
-import agent from '../agent';
+import agent from '../api';
 import {
   HOME_PAGE_LOADED,
   HOME_PAGE_UNLOADED,

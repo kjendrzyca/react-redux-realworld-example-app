@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import marked from 'marked';
 import ArticleMeta from './ArticleMeta';
 import CommentContainer from './CommentContainer';
-import agent from '../agent';
+import agent from '../api';
 import { ARTICLE_PAGE_LOADED, ARTICLE_PAGE_UNLOADED } from './store/actionTypes';
 import { PAGE_UNLOADED } from '../constants/actionTypes';
 

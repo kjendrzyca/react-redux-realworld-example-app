@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import agent from '../agent';
+import agent from '../api';
 import { SET_PAGE } from '../constants/actionTypes';
 
 function ListPagination(props) {

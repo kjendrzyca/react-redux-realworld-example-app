@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { push } from 'connected-react-router';
-import agent from '../agent';
+import agent from '../api';
 import Header from './Header';
 import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
 import { Article } from '../Article';

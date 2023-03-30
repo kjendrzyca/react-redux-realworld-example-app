@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import agent from '../agent';
+import agent from '../api';
 import { DELETE_COMMENT } from './store/actionTypes';
 
 function DeleteButton(props) {

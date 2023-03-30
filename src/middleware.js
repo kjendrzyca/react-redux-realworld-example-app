@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import agent from './agent';
+import agent from './api';
 import {
   ASYNC_START,
   ASYNC_END,

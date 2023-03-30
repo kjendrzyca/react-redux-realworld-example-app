@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ListErrors from '../components/ListErrors';
-import agent from '../agent';
+import agent from '../api';
 import {
   ADD_TAG,
   EDITOR_PAGE_LOADED,
@@ -63,7 +63,6 @@ export function Editor(props) {
       onLoad(null);
     }
 
-    // 💡 hint: call PAGE_UNLOADED here as well
     return () => {
       dispatch({ type: EDITOR_PAGE_UNLOADED });
       dispatch({ type: PAGE_UNLOADED });

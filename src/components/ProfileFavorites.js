@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import agent from '../agent';
+import agent from '../api';
 import { Profile, mapStateToProps } from './Profile';
 import {
   PROFILE_PAGE_LOADED,

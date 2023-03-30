@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ListErrors from './ListErrors';
-import agent from '../agent';
+import agent from '../api';
 import {
   UPDATE_FIELD_AUTH,
   REGISTER,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ArticleList from '../components/ArticleList';
-import agent from '../agent';
+import agent from '../api';
 import { CHANGE_TAB } from '../constants/actionTypes';
 
 function YourFeedTab(props) {
