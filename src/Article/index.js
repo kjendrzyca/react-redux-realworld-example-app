@@ -1,2 +1,2 @@
-export { Article } from './Article';
+export { ArticleContainer } from './ArticleContainer';
 export { articleReducer } from './store/article';

@@ -5,7 +5,7 @@ import { push } from 'connected-react-router';
 import agent from '../api';
 import Header from './Header';
 import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
-import { Article } from '../Article';
+import { ArticleContainer } from '../Article';
 import { Editor } from '../Editor';
 import Home from '../Home';
 import Login from './Login';
@@ -58,7 +58,7 @@ function App() {
           <Route path="/register" component={Register} />
           <Route path="/editor/:slug" component={Editor} />
           <Route path="/editor" component={Editor} />
-          <Route path="/article/:id" component={Article} />
+          <Route path="/article/:id" component={ArticleContainer} />
           <Route path="/settings" component={Settings} />
           <Route path="/@:username/favorites" component={ProfileFavorites} />
           <Route path="/@:username" component={Profile} />

@@ -1,33 +1,14 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import marked from 'marked';
 import ArticleMeta from './ArticleMeta';
 import CommentContainer from './CommentContainer';
-import agent from '../api';
-import { ARTICLE_PAGE_LOADED, ARTICLE_PAGE_UNLOADED } from './store/actionTypes';
-import { PAGE_UNLOADED } from '../constants/actionTypes';
 
 export function Article(props) {
-  const dispatch = useDispatch();
-  const { article, comments, commentErrors } = useSelector((state) => state.article);
-  const currentUser = useSelector((state) => state.common.currentUser);
-
-  useEffect(() => {
-    const payload = Promise.all([
-      agent.Articles.get(props.match.params.id),
-      agent.Comments.forArticle(props.match.params.id),
-    ]);
-
-    dispatch({ type: ARTICLE_PAGE_LOADED, payload });
-
-    return () => {
-      dispatch({ type: ARTICLE_PAGE_UNLOADED });
-      dispatch({ type: PAGE_UNLOADED });
-    };
-
-  // 💡 hint: destructure props and update dependencies
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
+  const {
+    article, currentUser, comments, commentErrors, articleId,
+  } = props;
 
   if (!article) {
     return null;
@@ -82,9 +63,9 @@ export function Article(props) {
 
         <div className="row">
           <CommentContainer
-            comments={comments || []}
+            comments={comments}
             errors={commentErrors}
-            slug={props.match.params.id}
+            slug={articleId}
             currentUser={currentUser}
           />
         </div>
@@ -92,3 +73,19 @@ export function Article(props) {
     </div>
   );
 }
+
+Article.propTypes = {
+  article: PropTypes.shape({}),
+  currentUser: PropTypes.shape({
+    username: PropTypes.string,
+  }).isRequired,
+  comments: PropTypes.arrayOf(PropTypes.shape({})),
+  commentErrors: PropTypes.shape({}),
+  articleId: PropTypes.string.isRequired,
+};
+
+Article.defaultProps = {
+  article: null,
+  comments: [],
+  commentErrors: {},
+};
