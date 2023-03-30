@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import CommentInput from './CommentInput';
 import CommentList from './CommentList';
-import ListErrors from '../ListErrors';
+import ListErrors from '../components/ListErrors';
 
 function CommentContainer(props) {
   if (props.currentUser) {

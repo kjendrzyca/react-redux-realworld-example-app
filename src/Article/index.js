@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import marked from 'marked';
 import ArticleMeta from './ArticleMeta';
 import CommentContainer from './CommentContainer';
-import agent from '../../agent';
+import agent from '../agent';
 // 💡 hint: those actions should be moved to `./store/actionTypes`
-import { ARTICLE_PAGE_LOADED, ARTICLE_PAGE_UNLOADED } from '../../constants/actionTypes';
+import { ARTICLE_PAGE_LOADED, ARTICLE_PAGE_UNLOADED } from '../constants/actionTypes';
 // 💡 hint: you need a separate, generic action action here `PAGE_UNLOADED` see `common.js` reducer
 
 function Article(props) {

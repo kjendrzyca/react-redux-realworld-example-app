@@ -5,7 +5,7 @@ import { push } from 'connected-react-router';
 import agent from '../agent';
 import Header from './Header';
 import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
-import Article from './Article';
+import Article from '../Article';
 import Editor from './Editor';
 import Home from '../Home';
 import Login from './Login';
