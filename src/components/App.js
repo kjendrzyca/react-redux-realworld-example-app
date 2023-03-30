@@ -6,7 +6,7 @@ import agent from '../agent';
 import Header from './Header';
 import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
 import Article from '../Article';
-import Editor from './Editor';
+import Editor from '../Editor/Editor';
 import Home from '../Home';
 import Login from './Login';
 import Profile from './Profile';

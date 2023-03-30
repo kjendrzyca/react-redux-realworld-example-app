@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ListErrors from './ListErrors';
+import ListErrors from '../components/ListErrors';
 import agent from '../agent';
 import {
   // 💡 hint: this action needs to be here
