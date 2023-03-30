@@ -2,15 +2,13 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import agent from '../agent';
-
-// 💡 hint: this should be replaced with a generic ROOT_REDIRECT action, see `common.js` reducer
-import { DELETE_ARTICLE } from '../constants/actionTypes';
+import { ROOT_REDIRECT } from '../constants/actionTypes';
 
 function ArticleActions(props) {
   const dispatch = useDispatch();
 
   // 💡 hint: this payload is not used
-  const onClickDelete = (payload) => dispatch({ type: DELETE_ARTICLE, payload });
+  const onClickDelete = () => dispatch({ type: ROOT_REDIRECT });
 
   const { article } = props;
   const del = () => {

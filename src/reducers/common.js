@@ -6,8 +6,8 @@ import {
   SETTINGS_SAVED,
   LOGIN,
   REGISTER,
-  DELETE_ARTICLE,
-  ARTICLE_PAGE_UNLOADED,
+  ROOT_REDIRECT,
+  PAGE_UNLOADED,
   EDITOR_PAGE_UNLOADED,
   HOME_PAGE_UNLOADED,
   PROFILE_PAGE_UNLOADED,
@@ -56,11 +56,9 @@ export default (state = defaultState, action) => {
         token: action.error ? null : action.payload.user.token,
         currentUser: action.error ? null : action.payload.user,
       };
-    // 💡 hint: common reducer shouldn't really react to the feature actions
-    // rename this one to `ROOT_REDIRECT`, `DELETE_ARTICLE` is dispatched in only one place
-    case DELETE_ARTICLE:
+    case ROOT_REDIRECT:
       return { ...state, redirectTo: '/' };
-    case ARTICLE_PAGE_UNLOADED:
+    case PAGE_UNLOADED:
     case EDITOR_PAGE_UNLOADED:
     case HOME_PAGE_UNLOADED:
     case PROFILE_PAGE_UNLOADED:

@@ -4,9 +4,8 @@ import marked from 'marked';
 import ArticleMeta from './ArticleMeta';
 import CommentContainer from './CommentContainer';
 import agent from '../agent';
-// 💡 hint: those actions should be moved to `./store/actionTypes`
-import { ARTICLE_PAGE_LOADED, ARTICLE_PAGE_UNLOADED } from '../constants/actionTypes';
-// 💡 hint: you need a separate, generic action action here `PAGE_UNLOADED` see `common.js` reducer
+import { ARTICLE_PAGE_LOADED, ARTICLE_PAGE_UNLOADED } from './store/actionTypes';
+import { PAGE_UNLOADED } from '../constants/actionTypes';
 
 function Article(props) {
   const dispatch = useDispatch();
@@ -21,8 +20,10 @@ function Article(props) {
 
     dispatch({ type: ARTICLE_PAGE_LOADED, payload });
 
-    // 💡 hint: call PAGE_UNLOADED here as well
-    return () => dispatch({ type: ARTICLE_PAGE_UNLOADED });
+    return () => {
+      dispatch({ type: ARTICLE_PAGE_UNLOADED });
+      dispatch({ type: PAGE_UNLOADED });
+    };
 
   // 💡 hint: destructure props and update dependencies
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -34,7 +35,7 @@ function Article(props) {
 
   const markup = { __html: marked(article.body, { sanitize: true }) };
 
-  const canModify = props.currentUser
+  const canModify = currentUser
     && currentUser.username === article.author.username;
 
   return (

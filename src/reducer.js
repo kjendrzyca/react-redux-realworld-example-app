@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
-import article from './reducers/article';
+import article from './Article/store/article';
 import articleList from './reducers/articleList';
 import auth from './reducers/auth';
 import common from './reducers/common';
